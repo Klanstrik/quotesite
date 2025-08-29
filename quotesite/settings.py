@@ -1,27 +1,26 @@
-import secrets
 import os
 from pathlib import Path
+
+# Базовая директория проекта
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+SECRET_KEY = "once"
+
 DEBUG = False
 
-ALLOWED_HOSTS = ["killonce.pythonanywhere.com"]
+# Домен PythonAnywhere
+ALLOWED_HOSTS = [
+    "killonce.pythonanywhere.com",
+    "127.0.0.1",
+    "localhost",
+]
 
-CSRF_TRUSTED_ORIGINS = ["https://killonce.pythonanywhere.com"]
+# Разрешённые origin для CSRF
+CSRF_TRUSTED_ORIGINS = [
+    "https://killonce.pythonanywhere.com",
+]
 
-STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
-ROOT_URLCONF = "quotesite.urls"
-
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-# СЕКРЕТНЫЙ КЛЮЧ для локалки
-SECRET_KEY = "django-insecure-" + secrets.token_urlsafe(50)
-
-DEBUG = True
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
-
-
+# Приложения
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -29,17 +28,26 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
-    "django.contrib.humanize",
     "django_htmx",
     "quotes",
 ]
 
+MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+]
+
+ROOT_URLCONF = "quotesite.urls"
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -51,18 +59,10 @@ TEMPLATES = [
         },
     },
 ]
-MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django_htmx.middleware.HtmxMiddleware",
-]
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]  # для локального запуска
+WSGI_APPLICATION = "quotesite.wsgi.application"
+
+# База данных
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -70,14 +70,32 @@ DATABASES = {
     }
 }
 
-from pathlib import Path
-BASE_DIR = Path(__file__).resolve().parent.parent
+# Пароли
+AUTH_PASSWORD_VALIDATORS = [
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+]
 
-# --- static files ---
+# Локаль
+LANGUAGE_CODE = "ru-ru"
+TIME_ZONE = "UTC"
+USE_I18N = True
+USE_TZ = True
+
+# Статика
 STATIC_URL = "/static/"
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
+# Медиa
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
-#STATICFILES_DIRS = [BASE_DIR / "static"]
+# Настройки для безопасности
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-
-# STATIC_ROOT = BASE_DIR / "staticfiles"
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
