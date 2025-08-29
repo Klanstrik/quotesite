@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Цитаты ✨{% endblock %}</title>
+
+  <link rel="icon" href="{% static 'favicon.ico' %}">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/htmx.org@2.0.2"></script>
+
+  <style>
+    /* Эффект «стекла» */
+    .glass { background: rgba(255,255,255,.08); backdrop-filter: blur(12px); }
+    .card  { background: rgba(17,24,39,.55);  backdrop-filter: blur(10px); }
+
+    /* Тёмный вид селекта (корпус), при этом раскрытый список — светлый */
+    .select-dark{
+      background: rgba(255,255,255,.05);
+      color: #e5e7eb; /* slate-200 */
+      border: 1px solid rgba(255,255,255,.10);
+      transition: box-shadow .15s ease, border-color .15s ease;
+      color-scheme: light; /* выпадашка будет светлой */
+    }
+    .select-dark:focus{
+      outline: none;
+      border-color: rgba(99,102,241,.6); /* indigo-500 */
+      box-shadow: 0 0 0 2px rgba(99,102,241,.5);
+    }
+    /* Пункты списка — чёрный на белом */
+    .select-dark option{
+      background:#fff;
+      color:#0f172a; /* slate-900 */
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-black text-slate-100">
+
+  <!-- Шапка -->
+  <header class="sticky top-0 z-10 border-b border-white/10 glass">
+    <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="/" class="font-semibold text-lg tracking-tight">✨ Quote<span class="text-indigo-400">Box</span></a>
+      <nav class="flex gap-2">
+        <a href="/" class="px-3 py-1.5 rounded-lg hover:bg-white/10 transition">🎲 Случайная</a>
+        <a href="/popular/" class="px-3 py-1.5 rounded-lg hover:bg-white/10 transition">🔥 ТОП-10</a>
+        <a href="/add/" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 transition text-white">➕ Добавить</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Контент -->
+  <main class="max-w-3xl mx-auto p-6">
+    {% block content %}{% endblock %}
+  </main>
+
+</body>
+</html>

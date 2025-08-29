@@ -1,0 +1,17 @@
+{% extends "quotes/base.html" %}
+{% block title %}Добавить источник{% endblock %}
+{% block content %}
+  <div class="card rounded-2xl p-6 shadow-xl ring-1 ring-white/10">
+    <h1 class="text-2xl font-semibold mb-4">Добавить источник</h1>
+    <form method="post" class="space-y-4">
+      {% csrf_token %}
+      <div>
+        <label class="block mb-1 text-sm opacity-80">Название</label>
+        {{ sf.name }}
+      </div>
+      <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 transition">
+        ➕ Создать
+      </button>
+    </form>
+  </div>
+{% endblock %}

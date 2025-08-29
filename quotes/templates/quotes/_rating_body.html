@@ -1,0 +1,22 @@
+<div id="rating-{{ quote.id }}" hx-target="this" hx-swap="outerHTML" class="flex items-center gap-2">
+  <form method="post" action="{% url 'vote' quote.id %}" hx-post="{% url 'vote' quote.id %}">
+    {% csrf_token %}
+
+    {# активные/заблокированные состояния #}
+    {% with liked=(voted_value == 1) disliked=(voted_value == -1) %}
+      <button type="submit" name="value" value="1"
+              {% if liked or disliked %}disabled{% endif %}
+              class="px-3 py-1.5 rounded-lg transition
+                     {% if liked %}bg-emerald-700 cursor-not-allowed{% else %}bg-emerald-600 hover:bg-emerald-500{% endif %}">
+        👍 <span class="font-semibold">{{ quote.likes }}</span>
+      </button>
+
+      <button type="submit" name="value" value="-1"
+              {% if liked or disliked %}disabled{% endif %}
+              class="px-3 py-1.5 rounded-lg transition
+                     {% if disliked %}bg-rose-700 cursor-not-allowed{% else %}bg-rose-600 hover:bg-rose-500{% endif %}">
+        👎 <span class="font-semibold">{{ quote.dislikes }}</span>
+      </button>
+    {% endwith %}
+  </form>
+</div>

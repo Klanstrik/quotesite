@@ -1,0 +1,10 @@
+{% extends "quotes/base.html" %}
+{% block title %}Случайная цитата{% endblock %}
+{% block content %}
+  <div class="card rounded-2xl p-6 shadow-xl ring-1 ring-white/10 space-y-4">
+    <div class="text-xl leading-relaxed">{{ quote.text }}</div>
+    <div class="opacity-70">— {{ quote.author|default:"Неизвестный автор" }}</div>
+
+    {% include "quotes/_rating.html" with quote=quote voted_value=voted_value %}
+  </div>
+{% endblock %}

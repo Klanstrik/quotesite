@@ -1,0 +1,14 @@
+<div id="rating-{{ quote.id }}" class="flex items-center gap-2"
+     hx-target="this" hx-swap="outerHTML">
+  <button
+    hx-get="{% url 'vote' quote.id %}?value=1"
+    class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 transition">
+    👍 <span class="font-semibold">{{ quote.likes }}</span>
+  </button>
+
+  <button
+    hx-get="{% url 'vote' quote.id %}?value=-1"
+    class="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 transition">
+    👎 <span class="font-semibold">{{ quote.dislikes }}</span>
+  </button>
+</div>

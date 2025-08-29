@@ -1,0 +1,10 @@
+{% extends "quotes/base.html" %}
+{% block title %}Нет цитат{% endblock %}
+{% block content %}
+  <div class="card rounded-2xl p-6 shadow-xl ring-1 ring-white/10 text-center">
+    <p class="opacity-80">Цитат пока нет.</p>
+    <a href="/add/" class="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 transition">
+      ➕ Добавить первую
+    </a>
+  </div>
+{% endblock %}

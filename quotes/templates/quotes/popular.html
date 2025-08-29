@@ -1,0 +1,16 @@
+{% extends "quotes/base.html" %}
+{% block title %}ТОП-10 цитат{% endblock %}
+{% block content %}
+  <h1 class="text-2xl font-semibold mb-4">ТОП-10</h1>
+  <div class="space-y-4">
+    {% for q in quotes %}
+      <div class="card rounded-2xl p-5 ring-1 ring-white/10 space-y-2">
+        <div class="text-lg leading-relaxed">{{ q.text }}</div>
+        <div class="opacity-70">— {{ q.author|default:"Неизвестный" }}</div>
+        {% include "quotes/_rating.html" with quote=q voted_value=q.voted_value %}
+      </div>
+    {% empty %}
+      <div class="opacity-70">Пока нет цитат.</div>
+    {% endfor %}
+  </div>
+{% endblock %}
